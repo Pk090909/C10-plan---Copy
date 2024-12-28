@@ -1,0 +1,42 @@
+<% title = "Weekly Timetable"; page = "timetable"; %>
+<h1>Weekly Timetable</h1>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Day</th>
+      <th>Tasks</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% timetable.forEach((day, index) => { %>
+      <tr>
+        <td><%= day.day %></td>
+        <td>
+          <% if (day.tasks.length > 0) { %>
+            <ul>
+              <% day.tasks.forEach(task => { %>
+                <li><%= task %></li>
+              <% }); %>
+            </ul>
+          <% } else { %>
+            No tasks scheduled.
+          <% } %>
+        </td>
+        <td>
+          <button class="btn btn-primary" onclick="addTask('<%= day.day %>')">Add Task</button>
+        </td>
+      </tr>
+    <% }); %>
+  </tbody>
+</table>
+
+<script>
+  function addTask(day) {
+    const task = prompt(`Enter a task for ${day}:`);
+    if (task) {
+      alert(`Task "${task}" added for ${day}!`);
+      // Code to save the task in the backend will go here.
+    }
+  }
+</script>

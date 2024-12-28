@@ -1,0 +1,63 @@
+<%- include('partials/header') %>
+<div class="container mt-4">
+    <h1>Performance Analytics</h1>
+    
+    <div class="mb-4">
+        <h3>Syllabus Completion</h3>
+        <p><strong>Total Topics:</strong> <%= totalTopics %></p>
+        <p><strong>Completed Topics:</strong> <%= completedTopics %></p>
+        <p><strong>Completion Percentage:</strong> <%= completionPercentage %>%</p>
+        <div>
+            <canvas id="completionChart" width="400" height="200"></canvas>
+        </div>
+    </div>
+
+    <div class="mb-4">
+        <h3>Time Spent on Each Subject</h3>
+        <div>
+            <canvas id="timeSpentChart" width="400" height="200"></canvas>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Completion Chart
+    const completionChartCtx = document.getElementById('completionChart').getContext('2d');
+    new Chart(completionChartCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Completed', 'Remaining'],
+            datasets: [{
+                label: 'Syllabus Completion',
+                data: [<%= completedTopics %>, <%= totalTopics - completedTopics %>],
+                backgroundColor: ['#4CAF50', '#FF5722'],
+            }]
+        },
+        options: {
+            responsive: true,
+        }
+    });
+
+    // Time Spent Chart
+    const timeSpentChartCtx = document.getElementById('timeSpentChart').getContext('2d');
+    new Chart(timeSpentChartCtx, {
+        type: 'bar',
+        data: {
+            labels: [<% subjects.forEach(subject => { %>'<%= subject.name %>',<% }); %>],
+            datasets: [{
+                label: 'Hours Spent',
+                data: [<% subjects.forEach(subject => { %><%= timeSpentData[subject.name] %>,<% }); %>],
+                backgroundColor: '#007BFF',
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                }
+            }
+        }
+    });
+</script>
+<%- include('partials/footer') %>

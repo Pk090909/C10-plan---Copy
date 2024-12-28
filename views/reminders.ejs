@@ -1,0 +1,15 @@
+<% title = "Reminders"; page = "reminders"; %>
+<h1>Reminders</h1>
+<form action="/reminders" method="POST" class="mb-4">
+  <div class="input-group">
+    <input type="text" name="reminder" class="form-control" placeholder="Enter a reminder" required>
+    <button class="btn btn-primary" type="submit">Add Reminder</button>
+  </div>
+</form>
+<ul class="list-group">
+  <% reminders.forEach((reminder, index) => { %>
+    <li class="list-group-item">
+      <%= reminder %>
+    </li>
+  <% }); %>
+</ul>

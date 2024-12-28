@@ -1,0 +1,72 @@
+<%- include('partials/header') %>
+<div class="container mt-4">
+    <h1><%= subject.name %></h1>
+    <form action="/subjects/<%= subject._id %>/chapters" method="POST" class="mb-3">
+        <div class="input-group mb-2">
+            <input type="text" name="chapterTitle" class="form-control" placeholder="Chapter Title" required>
+            <select name="difficulty" class="form-select">
+                <option value="Easy">Easy</option>
+                <option value="Medium">Medium</option>
+                <option value="Hard">Hard</option>
+            </select>
+            <button type="submit" class="btn btn-primary">Add</button>
+        </div>
+    </form>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Chapter</th>
+                <th>Status</th>
+                <th>Difficulty</th>
+                <th>Revisions</th>
+                <th>Test Done</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% subject.chapters.forEach(chapter => { %>
+            <tr>
+                <td><%= chapter.title %></td>
+                <td>
+                    <form action="/subjects/<%= subject._id %>/chapters/<%= chapter._id %>/update" method="POST">
+                        <select name="status" class="form-select" onchange="this.form.submit()">
+                            <option value="Not Started" <%= chapter.status === "Not Started" ? "selected" : "" %>>Not Started</option>
+                            <option value="In Progress" <%= chapter.status === "In Progress" ? "selected" : "" %>>In Progress</option>
+                            <option value="Completed" <%= chapter.status === "Completed" ? "selected" : "" %>>Completed</option>
+                        </select>
+                    </form>
+                </td>
+                <td><%= chapter.difficulty %></td>
+                <td>
+                    <form action="/subjects/<%= subject._id %>/chapters/<%= chapter._id %>/update" method="POST">
+                        <input type="hidden" name="status" value="<%= chapter.status %>">
+                        <input 
+    type="number" 
+    name="revisions" 
+    class="form-control" 
+    value="<%= chapter.revisions || 0 %>" 
+    min="0" 
+    onchange="this.form.submit()"
+>
+
+                    </form>
+                </td>
+                <td>
+                    <form action="/subjects/<%= subject._id %>/chapters/<%= chapter._id %>/update" method="POST">
+                        <input type="hidden" name="status" value="<%= chapter.status %>">
+                        <input type="hidden" name="revisions" value="<%= chapter.revisions %>">
+                        <input type="checkbox" name="testDone" value="true" <%= chapter.testDone ? "checked" : "" %> onchange="this.form.submit()">
+                    </form>
+                </td>
+                <td>
+                    <form action="/subjects/<%= subject._id %>/chapters/<%= chapter._id %>/delete" method="POST">
+                        <button class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+    
+</div>
+<%- include('partials/footer') %>
