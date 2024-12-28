@@ -1,0 +1,23 @@
+<%- include('partials/header') %>
+<div class="container mt-5">
+    <div class="row align-items-center">
+        <div class="col-md-6" data-aos="fade-right" data-aos-duration="1000">
+            <h1 class="text-light">Welcome to Your Study Planner</h1>
+            <p class="text-secondary">
+                Track your progress, plan your studies, and achieve your goals with ease. <br>
+                <strong>Days Remaining:</strong> <span id="daysRemaining" class="badge bg-warning text-dark"></span>
+            </p>
+            <a href="/timetable" class="btn btn-primary btn-lg mt-3">Get Started</a>
+        </div>
+        <div class="col-md-6 text-center" data-aos="fade-left" data-aos-duration="1000">
+            <img src="/images/home-study.svg" alt="Study Illustration" class="img-fluid">
+        </div>
+    </div>
+</div>
+<%- include('partials/footer') %>
+<script>
+    const examDate = new Date("2024-02-15"); // Set your exam date here
+    const today = new Date();
+    const daysRemaining = Math.ceil((examDate - today) / (1000 * 60 * 60 * 24));
+    document.getElementById("daysRemaining").textContent = daysRemaining + " days";
+</script>

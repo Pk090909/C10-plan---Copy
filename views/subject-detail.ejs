@@ -1,72 +1,58 @@
 <%- include('partials/header') %>
-<div class="container mt-4">
-    <h1><%= subject.name %></h1>
-    <form action="/subjects/<%= subject._id %>/chapters" method="POST" class="mb-3">
-        <div class="input-group mb-2">
-            <input type="text" name="chapterTitle" class="form-control" placeholder="Chapter Title" required>
-            <select name="difficulty" class="form-select">
-                <option value="Easy">Easy</option>
-                <option value="Medium">Medium</option>
-                <option value="Hard">Hard</option>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <title><%= subject.name %> - Chapters</title>
+</head>
+<body>
+    <header class="container-fluid py-3 bg-dark text-light text-center">
+        <h1><%= subject.name %> - Chapters</h1>
+    </header>
+    <main class="container my-4">
+        <form action="/subjects/add-chapter/<%= subject._id %>" method="POST" class="mb-4">
+            <input type="text" name="title" placeholder="Chapter Title" class="form-control mb-2" required>
+            <select name="difficultyLevel" class="form-select mb-2">
+                <option value="easy">Easy</option>
+                <option value="medium" selected>Medium</option>
+                <option value="hard">Hard</option>
             </select>
-            <button type="submit" class="btn btn-primary">Add</button>
-        </div>
-    </form>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Chapter</th>
-                <th>Status</th>
-                <th>Difficulty</th>
-                <th>Revisions</th>
-                <th>Test Done</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% subject.chapters.forEach(chapter => { %>
-            <tr>
-                <td><%= chapter.title %></td>
-                <td>
-                    <form action="/subjects/<%= subject._id %>/chapters/<%= chapter._id %>/update" method="POST">
-                        <select name="status" class="form-select" onchange="this.form.submit()">
-                            <option value="Not Started" <%= chapter.status === "Not Started" ? "selected" : "" %>>Not Started</option>
-                            <option value="In Progress" <%= chapter.status === "In Progress" ? "selected" : "" %>>In Progress</option>
-                            <option value="Completed" <%= chapter.status === "Completed" ? "selected" : "" %>>Completed</option>
-                        </select>
-                    </form>
-                </td>
-                <td><%= chapter.difficulty %></td>
-                <td>
-                    <form action="/subjects/<%= subject._id %>/chapters/<%= chapter._id %>/update" method="POST">
-                        <input type="hidden" name="status" value="<%= chapter.status %>">
-                        <input 
-    type="number" 
-    name="revisions" 
-    class="form-control" 
-    value="<%= chapter.revisions || 0 %>" 
-    min="0" 
-    onchange="this.form.submit()"
->
+            <button type="submit" class="btn btn-success">Add Chapter</button>
+        </form>
 
+        <h2>Chapters:</h2>
+        <ul class="list-group">
+            <% subject.chapters.forEach((chapter, index) => { %>
+                <li class="list-group-item">
+                    <strong><%= chapter.title %></strong>
+                    <br>Difficulty: <%= chapter.difficultyLevel %>
+                    <br>Status: <%= chapter.completionStatus %>
+                    <br>Revision Times: <%= chapter.revisionTimes %>
+                    <br>Test Taken: <%= chapter.testStatus ? 'Yes' : 'No' %>
+
+                    <form action="/subjects/update-chapter/<%= subject._id %>/<%= chapter._id %>" method="POST" class="mt-2">
+                        <select name="completionStatus" class="form-select mb-2">
+                            <option value="not started" <%= chapter.completionStatus === 'not started' ? 'selected' : '' %>>Not Started</option>
+                            <option value="in progress" <%= chapter.completionStatus === 'in progress' ? 'selected' : '' %>>In Progress</option>
+                            <option value="completed" <%= chapter.completionStatus === 'completed' ? 'selected' : '' %>>Completed</option>
+                        </select>
+                        <input type="number" name="revisionTimes" class="form-control mb-2" value="<%= chapter.revisionTimes %>" min="0">
+                        <div class="form-check">
+                            <input type="checkbox" name="testStatus" class="form-check-input" <%= chapter.testStatus ? 'checked' : '' %> >
+                            <label class="form-check-label">Test Taken</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-2">Update Chapter</button>
                     </form>
-                </td>
-                <td>
-                    <form action="/subjects/<%= subject._id %>/chapters/<%= chapter._id %>/update" method="POST">
-                        <input type="hidden" name="status" value="<%= chapter.status %>">
-                        <input type="hidden" name="revisions" value="<%= chapter.revisions %>">
-                        <input type="checkbox" name="testDone" value="true" <%= chapter.testDone ? "checked" : "" %> onchange="this.form.submit()">
-                    </form>
-                </td>
-                <td>
-                    <form action="/subjects/<%= subject._id %>/chapters/<%= chapter._id %>/delete" method="POST">
-                        <button class="btn btn-danger btn-sm">Delete</button>
-                    </form>
-                </td>
-            </tr>
+                </li>
             <% }) %>
-        </tbody>
-    </table>
-    
-</div>
+        </ul>
+    </main>
+    <footer class="mt-auto py-3 text-center bg-light">
+        <p>&copy; 2024 Study Planner</p>
+    </footer>
+</body>
+</html>
+
 <%- include('partials/footer') %>

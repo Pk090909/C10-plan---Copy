@@ -29,14 +29,14 @@
     </script>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">Study Planner</a>
+            <a class="navbar-brand" href="/">📘 Study Planner</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link active" href="/">Home</a>
                     </li>
@@ -44,18 +44,15 @@
                         <a class="nav-link" href="/timetable">Timetable</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/resources">Resources</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/notifications">Reminders</a>
+                        <a class="nav-link" href="/analytics">Analytics</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Account
+                            More
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="/profile">Profile</a></li>
-                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                            <li><a class="dropdown-item" href="/resources">Resources</a></li>
+                            <li><a class="dropdown-item" href="/subjects">Subjects</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -63,11 +60,15 @@
         </div>
     </nav>
     
-    <header class="glass-effect">
-        <div class="container">
-            <h1>Study Planner</h1>
-            <button onclick="toggleDarkMode()" class="btn btn-secondary">Toggle Dark Mode</button>
-        </div>
-    </header>
+    
+
 </body>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        AOS.init();
+    });
+</script>
+
 </html>

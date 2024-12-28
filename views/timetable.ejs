@@ -1,64 +1,27 @@
 <%- include('partials/header') %>
-<div class="container mt-4">
-    <h1>Study Timetable</h1>
-    <form action="/timetable" method="POST" class="mb-3">
-        <div class="input-group">
-            <input type="number" name="timePerDay" class="form-control" placeholder="Time per day (in hours)" min="1" required>
+<div class="container mt-5">
+    <h1 class="text-center text-light mb-4" data-aos="fade-down" data-aos-duration="1000">Timetable</h1>
+    <form class="card p-4 bg-light shadow" data-aos="fade-up" data-aos-duration="1000">
+        <div class="mb-3">
+            <label for="studyHours" class="form-label">How many hours can you study daily?</label>
+            <input type="number" class="form-control" id="studyHours" name="studyHours" placeholder="Enter hours">
+        </div>
+        <div class="d-grid">
             <button type="submit" class="btn btn-primary">Generate Timetable</button>
         </div>
     </form>
-    
-    <% if (dailyTasks && dailyTasks.length > 0) { %>
-        <h2>Your Daily Timetable:</h2>
+    <div class="mt-4">
+        <% if (dailyTasks && dailyTasks.length > 0) { %>
+        <h2 class="text-center text-light">Your Daily Timetable</h2>
         <% dailyTasks.forEach((task, index) => { %>
-            <h3>Study Session <%= index + 1 %></h3>
-            <ul class="list-group">
-                <% task.forEach(topic => { %>
-                    <li class="list-group-item">
-                        <strong>Topic:</strong> <%= topic.title %> - <strong>Difficulty:</strong> <%= topic.difficulty %>
-                    </li>
-                <% }) %>
-            </ul>
-        <% }) %>
-    <% } else { %>
-        <p>No timetable generated yet. Please specify the time per day.</p>
-    <% } %>
+        <div class="card p-3 mt-3" data-aos="fade-right" data-aos-duration="1000">
+            <h4>Session <%= index + 1 %></h4>
+            <p><%= task.subject %>: <%= task.topic %> (Difficulty: <%= task.difficulty %>)</p>
+        </div>
+        <% }); %>
+        <% } else { %>
+        <p class="text-light text-center mt-4">No timetable generated yet.</p>
+        <% } %>
+    </div>
 </div>
-
-<!-- Timer Section -->
-<div class="mt-4">
-    <h3>Pomodoro Timer</h3>
-    <div id="timer" class="display-4">25:00</div>
-    <button id="start-button" class="btn btn-success mt-3">Start</button>
-    <button id="reset-button" class="btn btn-danger mt-3">Reset</button>
-</div>
-
-<h3 class="mt-4">Your Study Tasks</h3>
-<!-- Display tasks here -->
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Subject</th>
-            <th>Topic</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <% dailyTasks.forEach((task, index) => { %>
-            <tr>
-                <td><%= task.subject %></td>
-                <td><%= task.topic %></td>
-                <td><%= task.status %></td>
-                <td>
-                    <!-- Actions for each task -->
-                </td>
-            </tr>
-        <% }) %>
-    </tbody>
-</table>
-</div>
-
-<script src="/js/pomodoro.js"></script>
-
 <%- include('partials/footer') %>

@@ -3,10 +3,11 @@ const mongoose = require('mongoose');
 const taskSchema = new mongoose.Schema({
     title: { type: String, required: true },
     description: { type: String },
-    completed: { type: Boolean, default: false },
-    date: { type: Date, default: Date.now },
-    type: { type: String, enum: ['daily', 'weekly'], required: true }, // 'daily' or 'weekly'
+    isCompleted: { type: Boolean, default: false },
+    dueDate: { type: Date },
+    taskType: { type: String, enum: ['daily', 'weekly'], default: 'daily' },
+    createdAt: { type: Date, default: Date.now },
 });
 
-const Task = mongoose.model('Task', taskSchema);
-module.exports = Task;
+// Check if the model already exists to avoid OverwriteModelError
+module.exports = mongoose.models.Task || mongoose.model('Task', taskSchema);
