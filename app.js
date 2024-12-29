@@ -30,7 +30,7 @@ app.use(session({
 app.use('/', require('./routes/home'));
 app.use('/tasks', require('./routes/tasks'));
 //app.use('/timetable', require('./routes/timetable'));
-app.use('/weekly-tasks', require('./routes/weekly-tasks'));
+app.use('/weeklytasks', require('./routes/weekly-tasks'));
 const subjectRoutes = require('./routes/subjects');
 app.use('/subjects', subjectRoutes);
 
