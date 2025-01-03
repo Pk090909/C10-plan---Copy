@@ -1,21 +1,30 @@
 <%- include('partials/header') %>
 <div class="container-sm  mt-5 rounded">
-    <div class="row align-items-center">
-        <div class="col-md-6" data-aos="fade-right" data-aos-duration="1000">
-            <h1 class="text-light">Welcome to Your Study Planner</h1>
-            <p class="text-dark text-align-center">
+    <div  data-aos="fade-center" data-aos-duration="1000">
+        <h1 class="text-light text-center">Welcome to Your Study Planner</h1>
+        
+            
+            <p class="text-dark text-center">
                 Track your progress, plan your studies, and achieve your goals with ease. <br>
                 <strong>Days Remaining:</strong> <span id="daysRemaining" class="badge bg-warning text-dark"></span>
+                
             </p>
-            <a href="/tasks" class="btn btn-primary align-items-center btn-lg mx-30">Get Started</a>
-        </div>
-        <div class="col-md-6 text-center" data-aos="fade-left" data-aos-duration="1000">
-            
+                
+        <div class=" text-center" data-aos="fade-center" data-aos-duration="1000">
+            <a href="/task" class="btn btn-primary align-center btn-lg mx-30">Get Started</a>
         </div>
     </div>
 </div>
 
-<main class="container my-4">
+<div class="container mt-5">
+    <ul>
+    <li> <h3 class="pq text-center">#Class 10th - 100% </h3> </li>
+    <li> <h3 class="pq text-center">#Class 10th - 1st Rank </h3> </li>
+    <li></li>
+    </ul> 
+</div>
+
+<main class="container my-4 " data-aos="fade-left" data-aos-duration="1000">
     <h2>Today's Tasks</h2>
     <ul id="taskList" class="list-group">
         <% tasks.forEach(task => { %>
