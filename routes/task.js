@@ -12,19 +12,19 @@ router.get('/', async (req, res) => {
 router.post('/add', async (req, res) => {
     const { title, description, dueDate, taskType } = req.body;
     await Task.create({ title, description, dueDate, taskType });
-    res.redirect('/tasks');
+    res.redirect('/task');
 });
 
 // Mark task as completed
 router.post('/complete/:id', async (req, res) => {
     await Task.findByIdAndUpdate(req.params.id, { isCompleted: true });
-    res.redirect('/tasks');
+    res.redirect('/task');
 });
 
 // Delete task
 router.post('/delete/:id', async (req, res) => {
     await Task.findByIdAndDelete(req.params.id);
-    res.redirect('/tasks');
+    res.redirect('/task');
 });
 
 module.exports = router;

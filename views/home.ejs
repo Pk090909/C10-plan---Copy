@@ -14,10 +14,145 @@
         </div>
     </div>
 </div>
+
+<main class="container my-4">
+    <h2>Today's Tasks</h2>
+    <ul id="taskList" class="list-group">
+        <% tasks.forEach(task => { %>
+            <li class="list-group-item d-flex justify-content-between mb-2 align-items-center">
+                <div>
+                    <strong><%= task.title %></strong>
+                    <br>
+                    <small>Due: <%= task.dueDate ? task.dueDate.toLocaleDateString() : 'No due date' %></small>
+                </div>
+                <form action="/tasks/complete/<%= task._id %>" method="POST" style="display:inline;">
+                    <button type="submit" class="btn btn-success btn-sm">Complete</button>
+                </form>
+            </li>
+        <% }); %>
+    </ul>
+
+    <div id="showMoreContainer" class="text-center mt-3">
+        <button id="showMoreBtn" class="btn btn-primary" data-page="1">Show More</button>
+    </div>
+</main>
+
 <%- include('partials/footer') %>
 <script>
     const examDate = new Date("2025-03-01"); // Set your exam date here
     const today = new Date();
     const daysRemaining = Math.ceil((examDate - today) / (1000 * 60 * 60 * 24));
     document.getElementById("daysRemaining").textContent = daysRemaining + " days";
+
+    // Show More Button Logic
+    const showMoreBtn = document.getElementById('showMoreBtn');
+        const taskList = document.getElementById('taskList');
+
+        showMoreBtn.addEventListener('click', async () => {
+            const currentPage = parseInt(showMoreBtn.getAttribute('data-page')) + 1;
+
+            const response = await fetch(`/tasks?page=${currentPage}`);
+            const newTasks = await response.json();
+
+            if (newTasks.length > 0) {
+                newTasks.forEach(task => {
+                    const listItem = document.createElement('li');
+                    listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+                    listItem.innerHTML = `
+                        <div>
+                            <strong>${task.title}</strong>
+                            <br>
+                            <small>Due: ${task.dueDate ? new Date(task.dueDate).toLocaleDateString() : 'No due date'}</small>
+                        </div>
+                        <form action="/tasks/complete/${task._id}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-success btn-sm">Complete</button>
+                        </form>
+                    `;
+                    taskList.appendChild(listItem);
+                });
+
+                showMoreBtn.setAttribute('data-page', currentPage);
+            } else {
+                // Hide the button if no more tasks
+                document.getElementById('showMoreContainer').style.display = 'none';
+            }
+        });
+
+        const focusModeForm = document.getElementById("focusModeForm");
+    const focusTimerInput = document.getElementById("focusTimerInput");
+    const focusModeOverlay = document.getElementById("focusModeOverlay");
+    const focusTimeRemainingDisplay = document.getElementById("focusTimeRemaining");
+    const abortFocusMode = document.getElementById("abortFocusMode");
+
+    let focusCountdown;
+    let focusTimeRemaining; // Timer in seconds
+    const focusPassword = "your"; // Set your custom password here
+
+    // Prevent tab switching
+    let preventSwitch = false;
+
+    window.addEventListener("blur", () => {
+        if (preventSwitch) {
+            alert("Focus mode active. Please stay on this page.");
+            window.focus();
+        }
+    });
+
+    // Enter focus mode
+    focusModeForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const minutes = parseInt(focusTimerInput.value);
+        if (isNaN(minutes) || minutes <= 0) {
+            alert("Please enter a valid time.");
+            return;
+        }
+
+        focusTimeRemaining = minutes * 60;
+        focusModeOverlay.classList.remove("d-none");
+        focusTimerInput.value = "";
+        document.body.style.pointerEvents = "auto"; // Keep planner usable
+        preventSwitch = true; // Activate tab-lock
+
+        startFocusTimer();
+    });
+
+    // Abort focus mode
+    abortFocusMode.addEventListener("click", () => {
+        const userInput = prompt("Enter the password to abort focus mode:");
+        if (userInput === focusPassword) {
+            endFocusMode();
+        } else {
+            alert("Incorrect password. Stay focused!");
+        }
+    });
+
+    // Focus timer logic
+    function startFocusTimer() {
+        updateFocusTimeDisplay();
+
+        focusCountdown = setInterval(() => {
+            focusTimeRemaining--;
+
+            if (focusTimeRemaining <= 0) {
+                clearInterval(focusCountdown);
+                alert("Focus session complete! Great job!");
+                endFocusMode();
+            } else {
+                updateFocusTimeDisplay();
+            }
+        }, 1000);
+    }
+
+    function updateFocusTimeDisplay() {
+        const minutes = Math.floor(focusTimeRemaining / 60);
+        const seconds = focusTimeRemaining % 60;
+        focusTimeRemainingDisplay.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+    }
+
+    function endFocusMode() {
+        clearInterval(focusCountdown);
+        focusModeOverlay.classList.add("d-none");
+        preventSwitch = false;
+    }
 </script>

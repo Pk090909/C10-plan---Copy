@@ -5,7 +5,7 @@ const taskSchema = new mongoose.Schema({
     description: { type: String },
     isCompleted: { type: Boolean, default: false },
     dueDate: { type: Date },
-    taskType: { type: String, enum: ['daily', 'weekly'], default: 'daily' },
+    taskType: { type: String, enum: ['daily', 'weekly', 'yearly'], default: 'daily' },
     createdAt: { type: Date, default: Date.now },
 });
 

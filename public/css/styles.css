@@ -112,3 +112,16 @@ html, body {
         font-size: 0.8rem;
     }
 }
+
+#focusTimer {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+#abortFocusMode {
+    margin-top: 10px;
+    font-size: 16px;
+}

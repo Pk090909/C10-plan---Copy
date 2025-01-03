@@ -28,10 +28,11 @@ app.use(session({
 
 // Routes
 app.use('/', require('./routes/home'));
-app.use('/tasks', require('./routes/tasks'));
+app.use('/task', require('./routes/task'));
 //app.use('/timetable', require('./routes/timetable'));
 app.use('/weeklytasks', require('./routes/weekly-tasks'));
 const subjectRoutes = require('./routes/subjects');
+app.use('/yearly-tasks', require('./routes/yearly-tasks'));
 app.use('/subjects', subjectRoutes);
 
 const PORT = process.env.PORT || 5000;
