@@ -1,20 +1,36 @@
 <%- include('partials/header') %>
+<<<<<<< HEAD
 <div class="container mt-5">
     <div class="row align-items-center bg-dark rounded>
+=======
+<div class="container-sm  mt-5 rounded">
+    <div class="row align-items-center">
+>>>>>>> c4ba06e11927f3fdbd97e479bf5ddbb41d2cf962
         <div class="col-md-6" data-aos="fade-right" data-aos-duration="1000">
             <h1 class="text-light">Welcome to Your Study Planner</h1>
-            <p class="text-secondary">
+            <p class="text-dark text-align-center">
                 Track your progress, plan your studies, and achieve your goals with ease. <br>
                 <strong>Days Remaining:</strong> <span id="daysRemaining" class="badge bg-warning text-dark"></span>
             </p>
+<<<<<<< HEAD
             <a href="/tasks" class="btn btn-primary btn-lg mt-3">Get Started</a>
+=======
+            <a href="/tasks" class="btn btn-primary align-items-center btn-lg mx-30">Get Started</a>
+        </div>
+        <div class="col-md-6 text-center" data-aos="fade-left" data-aos-duration="1000">
+            
+>>>>>>> c4ba06e11927f3fdbd97e479bf5ddbb41d2cf962
         </div>
         
     </div>
 </div>
 <%- include('partials/footer') %>
 <script>
+<<<<<<< HEAD
     const examDate = new Date("2025-03-1"); // Set your exam date here
+=======
+    const examDate = new Date("2025-03-01"); // Set your exam date here
+>>>>>>> c4ba06e11927f3fdbd97e479bf5ddbb41d2cf962
     const today = new Date();
     const daysRemaining = Math.ceil((examDate - today) / (1000 * 60 * 60 * 24));
     document.getElementById("daysRemaining").textContent = daysRemaining + " days";

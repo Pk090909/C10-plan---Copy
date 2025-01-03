@@ -1,17 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<%- include('partials/header') %>
     <title>Weekly Tasks</title>
 </head>
 <body>
-    <header class="container-fluid py-3 bg-dark text-light text-center">
+    <header class="container-sm mt-3 px-0 py-1 --bs-dark-border-stuble text-light text-center rounded">
         <h1>Weekly Tasks</h1>
     </header>
     <main class="container my-4">
-        <h2>Your Weekly Tasks</h2>
+        
         <% if (tasks.length > 0) { %>
             <ul class="list-group">
                 <% tasks.forEach((task) => { %>
@@ -39,11 +34,9 @@
                 <% }) %>
             </ul>
         <% } else { %>
-            <p>No weekly tasks found!</p>
+            <p class="text-center">No weekly tasks found!</p>
         <% } %>
     </main>
-    <footer class="mt-auto py-3 text-center bg-light">
-        <p>&copy; 2024 Study Planner</p>
-    </footer>
-</body>
-</html>
+ <%- include('partials/footer') %>
+
+            
